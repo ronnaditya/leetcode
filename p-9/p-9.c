@@ -1,56 +1,39 @@
-#include<stdio.h>
 #include<stdlib.h>
+#include<stdio.h>
 
-int is_palindrome(int num) {
-  // Must allocate memory after knowing the size of the int.
-  
+bool isPalindrome(int x) {
+  if (x < 0) {
+    return false;
+  }
+
   int size = 0;
-  int counter_num = num;
-
-  while (counter_num > 0) {
-    counter_num = counter_num / 10;
+  int x_copy = x;
+  while (x_copy > 0) {
+    x_copy = x_copy / 10;
     size += 1;
   }
 
-  int *ptr_arr = malloc(sizeof(int) * size);
+  int *num_arr = malloc(sizeof(int) * size);
+  int *rev_arr = malloc(sizeof(int) * size);
+  int curr_digit;
 
   for (int i = 0; i < size; ++i) {
-    ptr_arr[i] = num % 10;
-    num = num / 10;
-  }
-  
-  int mid;
-  int *arr_l;
-  int *arr_r;
-
-  int odd = size % 2;
-
-  if (odd) {
-    mid = size / 2;
-    arr_l = malloc(sizeof(int) * (mid - 1));
-    arr_r = malloc(sizeof(int) * (mid - 1));
-  } else {
-    mid = size / 2;
-    arr_l = malloc(sizeof(int) * mid);
-    arr_r = malloc(sizeof(int) * mid); 
-  }
-   
-  for (int i = 0; i < mid; ++i) {
-    arr_l[i] = ptr_arr[i];
-    arr_r[i] = ptr_arr[size - 1 - i];
+    curr_digit = x % 10;
+    num_arr[i] = curr_digit;
+    rev_arr[size - 1 - i] = curr_digit;
+    x /= 10;
   }
 
-  for (int i = 0; i < mid; ++i) {
-    if (arr_l[i] == arr_r[i]) {
+  for (int i = 0; i < size; ++i) {
+    if (num_arr[i] == rev_arr[i]) {
       continue;
     } else {
       return false;
     }
   }
-
   return true;
 }
 
-int main () {
-  return is_palindrome(12344321);
+int main() {
+  printf("%d", isPalindrome(12677621));
 }
