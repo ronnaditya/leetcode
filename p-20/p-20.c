@@ -1,6 +1,7 @@
 #include<stdio.h>
 // Not including the following line broke the program. Current was printing "{", even though that character was not
 // there in the input.
+// Never mind this wasn't the problem. The problem was incorrect indexing.
 #include<string.h>
 
 bool isValid(char* s) {
@@ -8,8 +9,12 @@ bool isValid(char* s) {
   char closed_arr[3] = {')', '}', ']'};
 
   char current[strlen(s)] = {};
-  char curr_count = 0;
+
+  if (strlen(s) == 1) {
+    return false;
+  }
   
+  int curr_count = 0;
   int i = 0;
   while (s[i] != 0) {
     for (int j = 0; j < 3; ++j) {
@@ -18,20 +23,21 @@ bool isValid(char* s) {
         ++curr_count;
         continue;
       } else if (s[i] == closed_arr[j]) {
+        if (curr_count == 0) {
+            return false;
+        }
         if (open_arr[j] == current[curr_count - 1]) {
           --curr_count;
           continue;
         } else {
-          printf("I'm here");
           return false;
         }
       }
     }
     ++i;
   }
-  
-  // This does not work here because of the way data structures work in C.
-  if (current) {
+
+  if (curr_count) {
     return false;
   } else {
     return true;
@@ -39,5 +45,5 @@ bool isValid(char* s) {
 }
 
 void main() {
-  printf("%d", isValid("[({{}})]"));
+  printf("%d", isValid("){"));
 }
