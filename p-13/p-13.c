@@ -21,11 +21,6 @@ struct subtractions {
 };
 
 int translate(char roman) {
-  // pick a number, translate it to Roman numerals, and then try to translate it back. instead
-  // of intuiting the logic first and then writing the code, let the pattern itself write the
-  // code for itself.
-  //
-  // you cannot trust the C compiler to give you the information you need to address a bug.
   for (int i = 0; i < 7; ++i) {
     if (roman == characters[i].roman) {
       return characters[i].number;
@@ -60,20 +55,24 @@ int romanToInt(char* s) {
   int length = strlen(s);
   
   int number = 0;
+  int negative = false;
   int i = 0;
   while (i < length) {
     for (int j = 0; j < 3; ++j) {
       if (s[i] == subtraction_pairs[j].to_be_subtracted) {
         for (int l = 0; l < 2; ++l) {
           if (s[i + 1] == subtraction_pairs[j].subtracted_from[l]) {
-              number += translate(s[i + 1]) - translate(s[i]);
+            number += translate(s[i + 1]) - translate(s[i]);
+            ++i;
           }
         }
       }
     }
+    ++i;
   }
+  return number;
 }
 
 void main () {
-  printf("%d", romanToInt("XL"));
+  printf("%d", romanToInt("CM"));
 }
