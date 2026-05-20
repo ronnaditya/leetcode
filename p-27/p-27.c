@@ -2,19 +2,19 @@
 
 int removeElement(int* nums, int numsSize, int val) {
   int i = 0;
+  int vals = 0;
   while (i < numsSize) {
-    if (nums[i] == val) {
-      // The memory address after the last item of the current array is accessed in this algorithm.
-      // That's the reason for it not working, as the second to last item is replaced by the item
-      // after the last memory address of the array, and the last `val` is placed at the address
-      // after the array.
+    if (nums[i] == val & i < numsSize - 2) {
       int j = i + 1;
       while (nums[j] == val & j < numsSize) {
         ++j;
       }
-      printf("i: %d | j: %d | nums[i]: %d | nums[j]: %d\n", i, j, nums[i], nums[j]);
       nums[i] = nums[j];
       nums[j] = val;
+    } else if (nums[i] == val & nums[i + 1] != val) {
+      nums[i] = nums[i + 1];
+      nums[i + 1] = val;
+      break;
     }
     ++i;
   }
