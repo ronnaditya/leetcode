@@ -31,20 +31,24 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     }
     if (common_bool) {
       common += 1;
+    } else {
+      break;
     }
     ++i;
   }
   
-  char* ptr_commonPrefix = malloc(sizeof(char) * common);
+  char* ptr_commonPrefix = malloc(sizeof(char) * common + 1);
   for (int i = 0; i < common; ++i) {
     ptr_commonPrefix[i] = strs[0][i];
   }
+
+  ptr_commonPrefix[common] = '\0';
 
   return ptr_commonPrefix;
 }
 
 void main() {
-  char* strs[] = {"flow", "flower", "flight"};
+  char* strs[] = {"cower", "cold", "clove"};
 
   printf("%s", longestCommonPrefix(strs, 3));
 }
