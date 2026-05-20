@@ -17,8 +17,6 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     }
   }
   
-  // to check all strings, it is difficult to set a single comparison statement, since the size of the array
-  // of strings will differ from case to case. instead, we can just compare two at a time.
   int common = 0;
   int i = 0;
   while (i < shortest) {
@@ -36,13 +34,17 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     }
     ++i;
   }
-  // char* ptr_commonPrefix = malloc(sizeof(common_prefix));
-  // ptr_commonPrefix = &common_prefix;
-  // return common_prefix;
+  
+  char* ptr_commonPrefix = malloc(sizeof(char) * common);
+  for (int i = 0; i < common; ++i) {
+    ptr_commonPrefix[i] = strs[0][i];
+  }
+
+  return ptr_commonPrefix;
 }
 
 void main() {
   char* strs[] = {"flow", "flower", "flight"};
 
-  longestCommonPrefix(strs, 3);
+  printf("%s", longestCommonPrefix(strs, 3));
 }
