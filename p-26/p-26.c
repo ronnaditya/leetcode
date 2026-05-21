@@ -3,12 +3,20 @@
 int removeDuplicates(int* nums, int numsSize) {
   int i = 0;
   int k = 0;
-  while (i <= numsSize - k) {
+  while (i <= numsSize - k - 1) {
     int j = i + 1;
-    while (j < numsSize && nums[i] == nums[j]) {
-      ++j;
+    bool unique = false;
+    while (j < numsSize) {
+      if (nums[i] == nums[j]) {
+        ++j;
+      } else {
+        unique = true;
+        break;
+      }
     }
-    ++k;
+    if (unique) {
+      ++k;
+    }
     int l = j - 1;
     while (l > i) {
       int m = l;
@@ -34,6 +42,6 @@ void main() {
   // int nums[] = {1, 2, 3, 3, 4,4,5,5,5,6,6};
   // int nums[] = {1, 1, 2};
   int nums[] = {0,0,1,1,1,2,2,3,3,4};
-  // int nums[] = {1,2};
+  // int nums[] = {1,1,2};
   printf("%d", removeDuplicates(nums, 10));
 }
