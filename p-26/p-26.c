@@ -9,6 +9,9 @@ int removeDuplicates(int* nums, int numsSize) {
     while (j < numsSize) {
       if (nums[i] == nums[j]) {
         ++j;
+        continue;
+      } else if (j > numsSize) {
+        unique = true;
       } else {
         unique = true;
         break;
@@ -29,9 +32,9 @@ int removeDuplicates(int* nums, int numsSize) {
     }
     ++i;
   }
-  for (int i = 0; i < numsSize; ++i) {
-    printf("%d", nums[i]);
-  }
+//   for (int i = 0; i < numsSize; ++i) {
+//     printf("%d", nums[i]);
+//   }
   return k;
 }
 
