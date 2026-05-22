@@ -16,24 +16,6 @@ struct ListNode* listConstructor(int num) {
     num /= 10;
     ++count;
   }
-
-  struct ListNode* nodeArray = malloc(sizeof(struct ListNode) * count);
-  struct ListNode* tmpNode;
-  for (int j = count - 1; j >= 0; --j) {
-    struct ListNode* node;
-    if (j == count - 1) {
-      node->val = numArray[j];
-      node->next = NULL;
-      nodeArray[j] = *node;
-      tmpNode = node;
-    } else {
-      node->val = numArray[j];
-      node->next = tmpNode;
-      nodeArray[j] = *node;
-      tmpNode = node;
-    }
-  }
-  return tmpNode;
 }
 
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
