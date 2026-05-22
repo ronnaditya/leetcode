@@ -5,10 +5,8 @@ int removeDuplicates(int* nums, int numsSize) {
   int i = 0;
   int non_uniques = 0;
   while (i < numsSize - non_uniques) {
-    // this i don't understand the mechanics of is it really the case that
-    // having found k unique elements, the rest of the array contains non-uniqye elements?
     int j = i + 1;
-    while (j <= numsSize) { // the problem does not lie here, as it the incremental check should be till the end
+    while (j <= numsSize) {
       if (j < numsSize && nums[i] == nums[j]) {
         ++j;
         ++non_uniques;
