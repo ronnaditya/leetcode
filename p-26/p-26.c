@@ -1,23 +1,26 @@
 #include<stdio.h>
 
 int removeDuplicates(int* nums, int numsSize) {
+  if (numsSize == 1) {return 1;}
   int i = 0;
-  int k = 0;
-  while (i <= numsSize - k - 1) {
+  int non_uniques = 0;
+  while (i < numsSize - k) {
+    // this i don't understand the mechanics of is it really the case that
+    // having found k unique elements, the rest of the array contains non-uniqye elements?
     int j = i + 1;
     bool unique = false;
-    while (j < numsSize) {
+    while (j < numsSize) { // the problem does not lie here, as it the incremental check should be till the end
       if (nums[i] == nums[j]) {
         ++j;
+        ++non_uniques;
         continue;
-      } else if (j > numsSize) {
-        unique = true;
-      } else {
+      } else { // captures two conditions of uniqueness: difference, and reaching the end of the array
         unique = true;
         break;
       }
     }
     if (unique) {
+      printf("Increasing");
       ++k;
     }
     int l = j - 1;
@@ -32,19 +35,11 @@ int removeDuplicates(int* nums, int numsSize) {
     }
     ++i;
   }
-//   for (int i = 0; i < numsSize; ++i) {
-//     printf("%d", nums[i]);
-//   }
   return k;
 }
 
 void main() {
-  // Make a set out of the passed list, albeit maintaining the length of the list itself,
-  // and return the number of elements in the set.
-  // int nums[] = {1,1,2,3,3,3,3,4,5};
-  // int nums[] = {1, 2, 3, 3, 4,4,5,5,5,6,6};
-  // int nums[] = {1, 1, 2};
-  int nums[] = {0,0,1,1,1,2,2,3,3,4};
-  // int nums[] = {1,1,2};
-  printf("%d", removeDuplicates(nums, 10));
+  // int nums[] = {1, 2};
+  int nums[] = {1, 2, 2, 2};
+  printf("%d", removeDuplicates(nums, 4));
 }
