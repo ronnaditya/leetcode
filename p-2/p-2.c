@@ -20,9 +20,10 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     l2 = l2->next;
   }
   
-  int addition[] = {};
+  int addition[] = {0 , 0, 0};
   bool carried = false;
   for (int i = size - 1; i >= 0; --i) {
+    printf("a: %d | b: %d\n", ptr_a[i], ptr_b[i]);
     int current = ptr_a[i] + ptr_b[i];
     if (carried) {
       ++current;
@@ -30,11 +31,14 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     }
     if (current >= 10) {
       carried = true;
-      --current;
+      current = current % 10;
     }
-    addition[i] = current; // recognised that the stack smashing error was coming from this line without help
+    addition[i] = current;
   }
-
+  
+  for (int i = 0; i < size; ++i) {
+    printf("%d", addition[i]);
+  }
 }
 
 void main() {
@@ -60,19 +64,19 @@ void main() {
   ptr_l13 = &l13;
 
   struct ListNode l21;
-  l21.val = 3;
+  l21.val = 4;
   l21.next = NULL;
   struct ListNode *ptr_l21 = malloc(sizeof(l21));
   ptr_l21 = &l21;
   
   struct ListNode l22;
-  l22.val = 4;
+  l22.val = 6;
   l22.next = ptr_l21;
   struct ListNode *ptr_l22 = malloc(sizeof(l22));
   ptr_l22 = &l22;
 
   struct ListNode l23;
-  l23.val = 2;
+  l23.val = 5;
   l23.next = ptr_l22;
   struct ListNode *ptr_l23 = malloc(sizeof(l23));
   ptr_l23 = &l23;
