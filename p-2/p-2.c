@@ -28,25 +28,23 @@ struct ListNode* listConstructor(int num) {
   return ptr_l;
 }
 
-struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-  int n1 = 0;
-  int n2 = 0;
+int numExtractor(struct ListNode* l) {
+  int n = 0;
+  int power = 0;
+  while (l->next != NULL) {
+    n += l->val * (pow(10, power));
+    l = l->next;
+    ++power;
+  }
+  n += l->val * pow(10, power);
 
-  int power1 = 0;
-  while (l1->next != NULL) {
-    n1 += l1->val * (pow(10, power1));
-    l1 = l1->next;
-    ++power1;
-  }
-  n1 += l1->val * pow(10, power1);
-  
-  int power2 = 0;
-  while (l2->next != NULL) {
-    n2 += l2->val * pow(10, power2);
-    l2 = l2->next;
-    power2 += 1;
-  }
-  n2 += l2->val * pow(10, power2);
+  return n;
+}
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+  int n1 = numExtractor(l1);
+  int n2 = numExtractor(l2);
+
   
   int n3 = n1 + n2;
 
@@ -58,6 +56,8 @@ void main() {
   struct ListNode* l2 = listConstructor(465);
 
   struct ListNode* l3 = addTwoNumbers(l1, l2);
+
+  printf("%d", numExtractor(l3));
 
   free(l1);
   free(l2);
