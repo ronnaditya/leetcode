@@ -1,17 +1,17 @@
 #include<stdio.h>
 
-// Maybe, coding all day is exactly what I need.
 int lengthOfLastWord(char* s) {
   int lastCharacter = 0;
   int i = 0;
-  while (s != 0) {
-    if (s != " ") {
+  while (s[i] != 0) {
+    if (s[i] != ' ') {
       lastCharacter = i;
     }
+    ++i;
   }
   printf("%d", lastCharacter);
 }
 
 void main() {
-
+  lengthOfLastWord("abcd     d  ");
 }
