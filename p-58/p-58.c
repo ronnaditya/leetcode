@@ -9,9 +9,23 @@ int lengthOfLastWord(char* s) {
     }
     ++i;
   }
-  printf("%d", lastCharacter);
+
+  if (s == "") {
+    return 0;
+  }
+
+  if (i == 1 || lastCharacter == 0) {
+    return 1;
+  }
+
+  int j = lastCharacter;
+  while (j >= 0 && s[j] != ' ') {
+    --j;
+  }
+
+  return lastCharacter - j;
 }
 
 void main() {
-  lengthOfLastWord("abcd     d  ");
+  printf("%d", lengthOfLastWord("day"));
 }
