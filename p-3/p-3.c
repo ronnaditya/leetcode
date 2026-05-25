@@ -5,24 +5,28 @@ int lengthOfLongestSubstring(char* s) {
   int longest = 0;
   int i = 0;
   while (s[i] != 0) {
-    int j = 0;
-    while (s[j] != 0) {
-      for (int k = j + 1; k >= i; --k) {
-        if (s[k] == s[j]) {
-          if (j - i > longest) {
-            printf("in\n");
-            printf("i: %d | j: %d\n", i, j);
-            longest = j - i;
-          }
+    int j = i;
+    int length = 0;
+    bool repeat = false;
+    while (s[j] != 0 && !repeat) {
+      char next = s[j + 1];
+      for (int k = i; k <= j; ++k) {
+        if (s[k] == next) {
+          repeat = true;
+          break;
         }
       }
+      ++length;
       ++j;
+      if (length > longest) {
+        longest = length;
+      }
     }
     ++i;
   }
-  return longest + 1;
+  return longest;
 }
 
 void main() {
-  printf("%d", lengthOfLongestSubstring("ret"));
+  printf("%d", lengthOfLongestSubstring("abcabcbb"));
 }
