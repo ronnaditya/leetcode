@@ -4,23 +4,48 @@
 double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) {
   int totalSize = nums1Size + nums2Size;
   int odd = totalSize % 2;
-  int medianIndex = (totalSize / 2) - 1; // Right median if totalSize is even
-  int* ptrLMedian;
-  int* ptrRMedian;
+  int medianIndex;
+  if (odd) {
+    medianIndex = (totalSize - 1) / 2;
+  } else {
+    medianIndex = (totalSize / 2);
+  }
+  int dummy = -1000;
+  int* ptrLMedian = &dummy;
+  int* ptrRMedian = &dummy;
   int i = 0;
   int j = 0;
-  while (i + j <= medianIndex) {
-    printf("IN");
-    if (i < nums1Size || j >= nums2Size) {
-      ptrLMedian = ptrRMedian;
-      ptrRMedian = &nums1[i];
-      ++i;
-    } else {
-      ptrLMedian = ptrRMedian;
-      ptrRMedian = &nums2[j];
-      ++j;
+  while ((i + j) <= medianIndex) {
+    if (i < nums1Size) {
+      if (j < nums2Size) {
+        if (nums1[i] <= nums2[j]) {
+          ptrLMedian = ptrRMedian;
+          ptrRMedian = &nums1[i];
+          ++i;
+          continue;
+        }
+      } else {
+        ptrLMedian = ptrRMedian;
+        ptrRMedian = &nums1[i];
+        ++i;
+        continue;
+      }
     }
-    printf("i: %d | j: %d\n", i, j);
+    if (j < nums2Size) {
+      if (i < nums1Size) {
+        if (nums1[i] >= nums2[j]) {
+          ptrLMedian = ptrRMedian;
+          ptrRMedian = &nums2[j];
+          ++j;
+          continue;
+        }
+      } else {
+        ptrLMedian = ptrRMedian;
+        ptrRMedian = &nums2[j];
+        ++j;
+        continue;
+      }
+    }
   }
   if (odd) {
     return *ptrRMedian;
@@ -31,6 +56,7 @@ double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Si
 
 void main() {
   int nums1[] = {1, 3};
-  int nums2[] = {2};
-  printf("%f", findMedianSortedArrays(nums1, 2, nums2, 1));
+  int nums2[] = {2, 7};
+  printf("%f", findMedianSortedArrays(nums1, 2, nums2, 2));
+  printf("ddd%d", (-1 + 0) / 2);
 }
