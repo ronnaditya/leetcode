@@ -2,56 +2,30 @@
 #include<stdio.h>
 
 double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) {
-  int medianIndex;
   int totalSize = nums1Size + nums2Size;
-  bool odd = totalSize % 2;
-  if (odd) {
-    int medianIndex = (totalSize - 1) / 2;
-  } else {
-    medianIndex = (totalSize / 2) - 1;
-  }
-  
+  int odd = totalSize % 2;
+  int medianIndex = (totalSize / 2) - 1; // Right median if totalSize is even
+  int* ptrLMedian;
+  int* ptrRMedian;
   int i = 0;
   int j = 0;
-  int arrIndex = 0;
-  int recent;
-  while ((arrIndex < medianIndex) && (i < nums1Size || j < nums2Size)) {
-    if (nums1[i] < nums2[j]) {
-      ++arrIndex;
+  while (i + j <= medianIndex) {
+    printf("IN");
+    if (i < nums1Size || j >= nums2Size) {
+      ptrLMedian = ptrRMedian;
+      ptrRMedian = &nums1[i];
       ++i;
-      recent = 1;
     } else {
-      ++arrIndex;
+      ptrLMedian = ptrRMedian;
+      ptrRMedian = &nums2[j];
       ++j;
-      recent = 2;
     }
+    printf("i: %d | j: %d\n", i, j);
   }
   if (odd) {
-    if (nums1[i] < nums2[j] && recent == 1) {
-      return nums1[i];
-    } else {
-      return nums2[j];
-    }
+    return *ptrRMedian;
   } else {
-    int l_median = 0;
-    int r_median = 0;
-    if (nums1[i] < nums2[j]) {
-      l_median = nums1[i];
-      ++i;
-    } else {
-      l_median = nums2[j];
-      ++j;
-    }
-    if (nums1[i] < nums2[j]) {
-      r_median = nums1[i];
-      ++i;
-    } else {
-
-      r_median = nums2[j];
-      ++j;
-    }
-    float median = (l_median + r_median) / 2.0;
-    return median;
+    return (*ptrRMedian + *ptrLMedian) / 2.0;
   }
 }
 
