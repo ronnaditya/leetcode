@@ -1,57 +1,77 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+
+struct Chars {
+  char* chars;
+  int len;
+};
 
 char* addBinary(char* a, char* b) {
-  int lena = 0;
-  int lenb = 0;
-
-  while (a[lena] != 0) {
-    ++lena;
+  int i = 0;
+  while (*(a + i)  != 0) {
+    ++i;
   }
-  while (b[lenb] != 0) {
-    ++lenb;
-  }
+  int lena = i;
 
-  char* chars = malloc(sizeof(char) * 100000);
+  int j = 0;
+  while (*(a + j) != 0) {
+    ++j;
+  }
+  int lenb = i;
+
+  struct Chars chara;
+  struct Chars charb;
+  chara.chars = a;
+  chara.len = lena;
+  charb.chars = b;
+  charb.len = lenb;
   
-  int carry = 0;
+  struct Chars chars[] = {chara, charb};
+  
+  int longerIndex;
+  int shorterIndex;
   if (lena > lenb) {
-    int diff = lena - lenb;
-    for (int i = lenb - 1; i >= 0; --i) {
-      if (a[i + diff] == '0' && b[i] == '0') {
-        if (carry) {
-          chars[i + diff] = '1';
-          carry = 0;
-        } else {
-          chars[i + diff] = '0';
-        }
-      } else if ((a[i + diff] == '0' && b[i] == '1') || (a[i + diff] == '1' && b[i] == '0')) {
-        if (carry) {
-          chars[i + diff] = '0';
-          carry = 1;
-        } else {
-          chars[i + diff] = '1';
-        }
-      } else {
-        if (carry) {
-          chars[i + diff] = '1';
-        } else {
-          chars[i + diff] = '0';
-          carry = 1;
-        }
-      }
-    }
-    return chars;
+    longerIndex = 0;
+    shorterIndex = 1;
   } else {
-
+    longerIndex = 1;
+    shorterIndex = 0;
   }
+  
+  int lenDiff = chars[longerIndex].len - chars[shorterIndex].len;
+  char* answer = malloc(sizeof(char) * (longerIndex + shorterIndex));
+  int carry = 0;
+  char current;
+  for (
+  int i = chars[longerIndex].len;
+  i >= chars[longerIndex].len - chars[shorterIndex].len - 1;
+  --i
+  ) {
+    if (a[i] == '0' && b[i - lenDiff] == '0') {
+      if (carry) {current = '1';}
+      carry = 0;
+    } else if (
+        (a[i] == '0' && b[i - lenDiff] == '1') ||
+        (a[i] == '1' && b[i - lenDiff] == '0')
+      ) {
+      if (carry) {current = '0';}
+      carry = 1;
+    } else if (a[i] == '1' && b[i - lenDiff] == '1') {
+      if (carry) {current = '1';}
+      carry = 1;
+    }
+    answer[i] = current;
+  }
+
+  return answer;
 }
 
 void main() {
-  char* a = "110110";
-  char* b = "110";
+  char* a = "11";
+  char* b = "11";
   char* answer = addBinary(a, b);
-  for (int i = 0; i < 6; ++i) {
-    printf("%d", answer[i]);
+  for (int i = 0; i < 4; ++i) {
+    printf("%c", *(answer + i));
   }
 }
