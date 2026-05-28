@@ -20,11 +20,23 @@ char* addBinary(char* a, char* b) {
   }
   int lenb = i;
 
+  char* a_reversed = malloc(sizeof(char) * lena);
+  char* b_reversed = malloc(sizeof(char) * lenb);
+
+  for (int i = lena - 1; i >= 0; --i) {
+    a_reversed[lena - (i % lena) - 1] = a[i];
+  }
+  
+  for (int j = lenb - 1; i >= 0; --i) {
+    b_reversed[lenb - (i % lenb) - 1] = b[i];
+  }
+
+
   struct Chars chara;
   struct Chars charb;
-  chara.chars = a;
+  chara.chars = a_reversed;
   chara.len = lena;
-  charb.chars = b;
+  charb.chars = b_reversed;
   charb.len = lenb;
   
   struct Chars chars[] = {chara, charb};
@@ -40,11 +52,11 @@ char* addBinary(char* a, char* b) {
   }
   
   int lenDiff = chars[longerIndex].len - chars[shorterIndex].len;
-  char* answer = malloc(sizeof(char) * (longerIndex + shorterIndex));
+  char* answer = malloc(sizeof(char) * (lena + lenb));
   int carry = 0;
   char current;
   for (
-  int i = chars[longerIndex].len;
+  int i = chars[longerIndex].len; // Only had to do this because I hadn't reversed the list.
   i >= chars[longerIndex].len - chars[shorterIndex].len - 1;
   --i
   ) {
