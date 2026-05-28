@@ -9,16 +9,16 @@ struct Chars {
 
 char* addBinary(char* a, char* b) {
   int i = 0;
-  while (*(a + i)  != 0) {
+  while (a[i]  != 0) {
     ++i;
   }
   int lena = i;
 
   int j = 0;
-  while (*(a + j) != 0) {
+  while (b[j] != 0) {
     ++j;
   }
-  int lenb = i;
+  int lenb = j;
 
   char* a_reversed = malloc(sizeof(char) * lena);
   char* b_reversed = malloc(sizeof(char) * lenb);
@@ -27,8 +27,8 @@ char* addBinary(char* a, char* b) {
     a_reversed[lena - (i % lena) - 1] = a[i];
   }
   
-  for (int j = lenb - 1; i >= 0; --i) {
-    b_reversed[lenb - (i % lenb) - 1] = b[i];
+  for (int j = lenb - 1; j >= 0; --j) {
+    b_reversed[lenb - (j % lenb) - 1] = b[j];
   }
 
 
@@ -51,37 +51,53 @@ char* addBinary(char* a, char* b) {
     shorterIndex = 0;
   }
   
-  int lenDiff = chars[longerIndex].len - chars[shorterIndex].len;
-  char* answer = malloc(sizeof(char) * (lena + lenb));
+  char* reversed_answer = malloc(sizeof(char) * (lena + lenb));
   int carry = 0;
   char current;
-  for (
-  int i = chars[longerIndex].len; // Only had to do this because I hadn't reversed the list.
-  i >= chars[longerIndex].len - chars[shorterIndex].len - 1;
-  --i
-  ) {
-    if (a[i] == '0' && b[i - lenDiff] == '0') {
-      if (carry) {current = '1';}
-      carry = 0;
+  for (int i = 0; i < chars[shorterIndex].len; ++i) {
+    if (*(a_reversed + i) == '0' && *(b_reversed + i) == '0') {
+      if (carry) {current = '1'; carry = 0;}
+      else {current = '0';}
     } else if (
-        (a[i] == '0' && b[i - lenDiff] == '1') ||
-        (a[i] == '1' && b[i - lenDiff] == '0')
+        (*(a_reversed + i) == '0' && *(b_reversed + i) == '1') ||
+        (*(a_reversed + i) == '1' && *(b_reversed + i) == '0')
       ) {
-      if (carry) {current = '0';}
-      carry = 1;
-    } else if (a[i] == '1' && b[i - lenDiff] == '1') {
-      if (carry) {current = '1';}
-      carry = 1;
+      if (carry) {current = '0'; carry = 1;}
+      else {current = '1';}
+    } else if (*(a_reversed + i) == '1' && *(b_reversed + i) == '1') {
+      if (carry) {current = '1'; carry = 1;}
+      else {current = '0'; carry = 1;}
     }
-    answer[i] = current;
+    *(reversed_answer + i) = current;
   }
 
+  for (int i = chars[shorterIndex].len; i < chars[longerIndex].len; ++i) {
+    if (*(chars[longerIndex].chars + i) == '0') {
+      if (carry) {current = '1'; carry = '0';}
+      else {current = '0';}
+    } else {
+      if (carry) {current = '0';}
+      else {current = '1';}
+    }
+    *(reversed_answer + i) = current;
+  }
+
+  char* answer = malloc(sizeof(char) * (chars[longerIndex].len + 1));
+  if (carry) {
+    *(reversed_answer + chars[longerIndex].len) = '1';
+    for (int i = 0; i < chars[longerIndex].len + 1; ++i) {
+      *(answer + i) = *(reversed_answer + (chars[longerIndex].len - (i % (chars[longerIndex].len + 1))));
+    }
+  } else {
+      printf("h");
+      *(answer + i) = *(reversed_answer + (chars[longerIndex].len - (i % (chars[longerIndex].len))));
+  }
   return answer;
 }
 
 void main() {
   char* a = "11";
-  char* b = "11";
+  char* b = "1";
   char* answer = addBinary(a, b);
   for (int i = 0; i < 4; ++i) {
     printf("%c", *(answer + i));
