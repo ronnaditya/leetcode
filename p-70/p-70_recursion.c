@@ -6,13 +6,12 @@ int climbStairs(int n) {
     return n;
   } else {
     int ways = 0;
-    int i = 0;
-    while (i <= n) {
-      ways += 2
-    }
+    ways += climbStairs(n - 1);
+    ways += climbStairs(n - 2);
+    return ways;
   }
 }
 
 void main() {
-  printf("%d", climbStairs(45));
+  printf("%d", climbStairs(3));
 }
