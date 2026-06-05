@@ -7,7 +7,7 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
   int j = 0;
 
   while (i < m + n) {
-    if (nums1[i] == 0 & i > m) {
+    if (nums1[i] == 0) {
       nums1[i] = nums2[j];
       ++j;
       ++i;
@@ -16,6 +16,7 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
     if (i < nums1Size & j < nums2Size) {
       if (nums1[i] < nums2[j]) {
         ++i;
+        continue;
       } else {
         for (int k = m + n - 1; k > i; --k) {
           nums1[k] = nums1[k - 1];
