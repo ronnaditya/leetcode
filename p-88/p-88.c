@@ -7,13 +7,12 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
   int j = 0;
   int k = 0;
   while (i < m + n) {
-    printf("i: %d | j: %d | k: %d\n", i, j, k);
     if (j < nums1Size) {
       if (k < nums2Size) {
         if (nums1[j] < nums2[k]) {
           ++j;
         } else {
-          for (int l = m - 1; l > j; --l) {
+          for (int l = m + n - 1; l > j; --l) {
             nums1[l] = nums1[l - 1];
           }
           nums1[j] = nums2[k];
@@ -25,11 +24,10 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
       }
     } else {
       for (int l = k; l < nums2Size; ++l) {
-        printf("Up in here\n");
         nums1[i] = nums2[l];
         ++i;
-      break;
       }
+      break;
     }
     ++i;
   }
