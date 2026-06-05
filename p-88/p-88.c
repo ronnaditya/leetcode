@@ -3,31 +3,16 @@
 #include<string.h>
 
 void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
-  int i = 0;
-  int j = 0;
+  int i = m + n - 1;
+  int j = m - 1;
+  int k = n - 1;
 
-  while (i < m + n) {
-    if (nums1[i] == 0) {
-      nums1[i] = nums2[j];
-      ++j;
-      ++i;
-      continue;
+  while (k >= 0) {
+    if (j >= 0 & nums1[j] > nums2[k]) {
+      nums1[i--] = nums1[j--];
+    } else {
+      nums1[i--] = nums2[k--];
     }
-    if (i < nums1Size & j < nums2Size) {
-      if (nums1[i] < nums2[j]) {
-        ++i;
-        continue;
-      } else {
-        for (int k = m + n - 1; k > i; --k) {
-          nums1[k] = nums1[k - 1];
-        }
-        nums1[i] = nums2[j];
-        ++i;
-        ++j;
-        continue;
-      }
-    }
-    ++i;
   }
 }
 
