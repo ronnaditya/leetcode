@@ -7,3 +7,4 @@ bool isBalanced(struct TreeNode* root) {
     }  
     return treeTraversal(root);
 }
+
